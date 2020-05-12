@@ -1,5 +1,5 @@
 ## 고객 관리 시스템 만들기
-clond coding
+fighting!
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
