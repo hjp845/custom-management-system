@@ -13,8 +13,7 @@ class Customr extends React.Component {
                 <TableCell>{this.props.job}</TableCell>
                 <TableCell>{this.props.gender}</TableCell>
             </TableRow>
-        )
-        
+        )        
     }
 }
 
