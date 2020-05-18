@@ -21,36 +21,28 @@ const styles = theme => ({
   }
 })
 
-const customer = [
-  {
-  'id': 1,
-  'image' : 'https://placeimg.com/64/64/1',
-  'name' : '포스트말론',
-  'birthday' : '951010',
-  'gender' : 'man',
-  'job' : 'singer'
-},
-{
-  'id': 2,
-  'image' : 'https://placeimg.com/64/64/2',
-  'name' : '황정평',
-  'birthday' : '981025',
-  'gender' : 'man',
-  'job' : 'investor'
-},
-{
-  'id': 3,
-  'image' : 'https://placeimg.com/64/64/3',
-  'name' : '홍길동이',
-  'birthday' : '130134',
-  'gender' : 'man',
-  'job' : 'programmer'
-},
-]
+
 
 class App extends Component {
+
+  state = {
+    customers: ""
+  }
+
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({customer: res}))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props; // 일반적으로 props 는 변경되지 않는 변수
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -65,7 +57,8 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-          {customer.map(c => {return (<Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} job={c.job}/>)})}
+          {this.state.customer ? this.state.customer.map(c => {return (<Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} job={c.job}/>)}) 
+          : ""}
           </TableBody>
         </Table>        
       </Paper>
