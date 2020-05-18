@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import Customer from './components/Customer'
+import Customer from './components/Customer';
+import CustomerAdd from './components/CustomerAdd';
 import './App.css';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -72,7 +73,8 @@ class App extends Component {
   render() {
     const { classes } = this.props; // 일반적으로 props 는 변경되지 않는 변수
     return (
-      <Paper className={classes.root}>
+      <div>
+        <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -96,6 +98,8 @@ class App extends Component {
           </TableBody>
         </Table>        
       </Paper>
+      <CustomerAdd/>
+      </div>
     );
   }
 }
