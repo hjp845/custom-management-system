@@ -27,9 +27,10 @@ const upload = multer({dest: './upload'});
 
 app.get('/api/customers', (req, res) => {
     connection.query(
-      "SELECT * FROM CUSTOMER",
+      "SELECT * FROM CUSTOMER WHERE isDeleted = 0",
       (err, rows, fields) => {
         res.send(rows);
+        console.log(err);
       }
     );
 });
@@ -39,7 +40,7 @@ app.use('/image', express.static('./upload'));
 
 app.post('/api/customers', upload.single('image'), (req, res) => {
   // 첫번 째 값은 id, null 이면 알아서 들어감
-  let sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, ?)';
+  let sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, ?, now(), 0)';
     let image = '/image/' + req.file.filename;
     let name = req.body.name;
     let birthday = req.body.birthday;
@@ -52,5 +53,16 @@ app.post('/api/customers', upload.single('image'), (req, res) => {
         }
     );
 })
+
+app.delete('/api/customers/:id', (req, res) => {
+  let sql = 'UPDATE CUSTOMER SET isDeleted = 1 WHERE id = ?';
+  let params = [req.params.id];
+  connection.query(sql, params,
+    (err, rows, fields) => {
+      res.send(rows);
+    }
+  )
+})
+
 // ` 러 헤줘야 문자열 안에 변수를 잘 출력할 수 잇음
 app.listen(port, () => console.log(`Listening on port ${port}`));
