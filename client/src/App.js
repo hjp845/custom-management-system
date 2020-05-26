@@ -46,9 +46,23 @@ props or state => sholudComponentUpdate()
 
 class App extends Component {
 
-  state = {
-    customers: "",
-    completed: 0,
+  constructor(props) {
+    super(props);
+    this.state = {
+      customers: '',
+      completed: 0
+    }
+  }
+
+  // 부분만 불러오기 되도록
+  stateRefresh = () => {
+    this.setState({
+      customers: '',
+      completed: 0
+    });
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err));
   }
 
   // api 를 비동기적으로 호출
@@ -98,7 +112,7 @@ class App extends Component {
           </TableBody>
         </Table>        
       </Paper>
-      <CustomerAdd/>
+      <CustomerAdd stateRefresh={this.stateRefresh}/>
       </div>
     );
   }

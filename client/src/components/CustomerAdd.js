@@ -17,8 +17,10 @@ class CustomerAdd extends React.Component {
     handleFormSubmit = (e) => {
         e.preventDefault()
         this.addCustomer()
+            // 추가하고 응답을 받고난 후에
             .then((response) => {
                 console.log(response.data);
+                this.props.stateRefresh();
             })
         this.setState({
             file: null, // 2bit 로 파일 내용이죠
@@ -28,7 +30,7 @@ class CustomerAdd extends React.Component {
             job: '',
             fileName: '' // 파일명
         })
-        window.location.reload();
+        
     }
     
     // 리로드할 때, 바뀐부분만 리로드하게 해줘야함

@@ -34,9 +34,11 @@ app.get('/api/customers', (req, res) => {
     );
 });
 
+// /image 경로로 접근해서, /upload 폴더에 접근
 app.use('/image', express.static('./upload'));
 
 app.post('/api/customers', upload.single('image'), (req, res) => {
+  // 첫번 째 값은 id, null 이면 알아서 들어감
   let sql = 'INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?, ?)';
     let image = '/image/' + req.file.filename;
     let name = req.body.name;
